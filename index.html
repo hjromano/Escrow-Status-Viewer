@@ -3,99 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status Financeiro Dinâmico</title>
+    <title>Gateway de Pagamentos - Dashboard v4.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="fonts.googleapis.com" rel="stylesheet">
     <style>
-        /* Estilos reset e básicos */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 450px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); overflow: hidden; }
-
-        /* Estilos do Cabeçalho */
-        .header { padding: 30px 20px; text-align: center; color: white; transition: background-color 0.3s ease; }
-        .status-badge { font-size: 1.2rem; font-weight: bold; padding: 8px 16px; border-radius: 20px; display: inline-block; margin-top: 10px; }
-        
-        /* Cores dos Status (Usadas pelo JS) */
-        .status-retido { background: #f1c40f; } /* Amarelo: Retido */
-        .status-liberado { background: #2ecc71; } /* Verde: Liberado */
-        .status-disputa { background: #e74c3c; } /* Vermelho: Em Disputa */
-
-        /* Estilos do Corpo */
-        .body-content { padding: 20px; }
-        .value-group { margin-bottom: 20px; }
-        .value-item { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.9rem; border-bottom: 1px solid #eee; }
-        .total-item { display: flex; justify-content: space-between; padding-top: 15px; border-top: 2px dashed #ddd; font-size: 1.5rem; font-weight: bold; }
-
-        /* Ações e Controles */
-        .controls { padding: 10px 20px; background: #eee; text-align: center; }
-        select { padding: 10px; border-radius: 5px; cursor: pointer; }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-effect { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
 
-    <div class="container">
-        <!-- CABEÇALHO (O JS vai mudar as classes aqui) -->
-        <div id="header-section" class="header status-retido">
-            <h2>Status da Transação</h2>
-            <div id="status-badge" class="status-badge">VALOR RETIDO</div>
+    <!-- Card Principal -->
+    <div class="max-w-lg w-full glass-effect rounded-[2rem] shadow-2xl shadow-blue-900/10 overflow-hidden border border-slate-200">
+        
+        <!-- Cabeçalho Dinâmico -->
+        <div id="status-header" class="p-8 text-center transition-all duration-500 bg-amber-500 text-white">
+            <div id="status-icon" class="inline-flex bg-white/20 p-4 rounded-full mb-4 ring-8 ring-white/10">
+                <!-- Ícone via JS -->
+            </div>
+            <h1 id="status-title" class="text-2xl font-bold tracking-tight uppercase">Pagamento Retido</h1>
+            <p id="status-desc" class="text-white/80 text-sm mt-1">Aguardando confirmação de entrega do serviço</p>
         </div>
 
-        <!-- DETALHES FINANCEIROS (Estáticos, mas poderiam ser dinâmicos tbm) -->
-        <div class="body-content">
-            <div class="value-group">
-                <div class="value-item">
-                    <span>Valor Bruto do Serviço</span>
-                    <strong>R$ 1.200,00</strong>
+        <div class="p-8 space-y-8">
+            <!-- Grid de Valores -->
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Valor Bruto</span>
+                    <span id="valor-bruto" class="text-lg font-bold text-slate-700">R$ 0,00</span>
                 </div>
-                <div class="value-item" style="color: #e74c3c;">
-                    <span>Taxas da Plataforma (10%)</span>
-                    <strong>- R$ 120,00</strong>
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Taxa Plataforma</span>
+                    <span id="valor-taxa" class="text-lg font-bold text-rose-500">- R$ 0,00</span>
                 </div>
-                <div class="total-item">
-                    <span>Valor Líquido</span>
-                    <strong id="liquid-value" style="color: #2ecc71;">R$ 1.080,00</strong>
+                <div class="col-span-2 bg-blue-600 p-6 rounded-2xl text-white shadow-lg shadow-blue-200">
+                    <span class="text-xs uppercase font-medium opacity-80 block mb-1">Valor Final a Receber (Líquido)</span>
+                    <span id="valor-liquido" class="text-3xl font-black">R$ 0,00</span>
+                </div>
+            </div>
+
+            <!-- Timeline de Segurança (Padrão 2026) -->
+            <div class="space-y-4">
+                <h3 class="text-slate-800 font-bold text-sm flex items-center">
+                    🛡️ Fluxo de Proteção ao Vendedor e Comprador
+                </h3>
+                <div class="border-l-2 border-slate-100 ml-3 space-y-6">
+                    <div class="relative pl-6">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-green-500 ring-4 ring-green-100"></div>
+                        <p class="text-sm font-semibold text-slate-700 leading-none">Pagamento Confirmado</p>
+                        <p class="text-xs text-slate-400 mt-1">Via Pix Automático 2026</p>
+                    </div>
+                    <div id="step-custodia" class="relative pl-6">
+                        <div id="dot-custodia" class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-200 animate-pulse"></div>
+                        <p class="text-sm font-semibold text-slate-700 leading-none">Dinheiro em Custódia Segura</p>
+                        <p id="label-custodia" class="text-xs text-slate-400 mt-1">Valor protegido pela API Gateway</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botões de Interface -->
+            <div class="flex flex-col gap-3 pt-4">
+                <button class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-xl">
+                    Emitir Nota Fiscal (NF-e)
+                </button>
+                <div class="flex gap-2">
+                    <button id="btn-liberar" onclick="mudarPara('liberado')" class="flex-1 bg-green-100 text-green-700 py-3 rounded-xl text-xs font-bold hover:bg-green-200 transition">Simular Liberação</button>
+                    <button id="btn-disputa" onclick="mudarPara('disputa')" class="flex-1 bg-rose-100 text-rose-700 py-3 rounded-xl text-xs font-bold hover:bg-rose-200 transition">Abrir Disputa</button>
                 </div>
             </div>
         </div>
 
-        <!-- CONTROLES PARA TESTE (NOVA SEÇÃO) -->
-        <div class="controls">
-            <label for="status-selector">Mudar Status para Teste:</label>
-            <select id="status-selector" onchange="updateStatus()">
-                <option value="retido" selected>Retido</option>
-                <option value="liberado">Liberado</option>
-                <option value="disputa">Em Disputa</option>
-            </select>
+        <div class="bg-slate-50 p-4 text-center border-t border-slate-100">
+            <p class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Certificado de Segurança Bancária 2026 • SSL 256-bit</p>
         </div>
     </div>
 
-    <!-- SCRIPT JAVASCRIPT -->
     <script>
-        // Função chamada sempre que o usuário muda a opção no <select>
-        function updateStatus() {
-            // 1. Captura o valor selecionado (retido, liberado ou disputa)
-            const selector = document.getElementById('status-selector');
-            const newStatus = selector.value;
+        // Objeto de dados simulando uma resposta de Banco de Dados ou API
+        const transacao = {
+            bruto: 5000.00,
+            taxaPorcentagem: 0.12, // 12%
+            status: 'retido'
+        };
 
-            // 2. Referencia os elementos HTML que precisam ser atualizados
-            const header = document.getElementById('header-section');
-            const badge = document.getElementById('status-badge');
-            
-            // Remove todas as classes de status antigas para evitar conflito de cores
-            header.classList.remove('status-retido', 'status-liberado', 'status-disputa');
-
-            // 3. Aplica a nova classe e texto conforme a lógica
-            if (newStatus === 'retido') {
-                header.classList.add('status-retido');
-                badge.textContent = 'VALOR RETIDO';
-            } else if (newStatus === 'liberado') {
-                header.classList.add('status-liberado');
-                badge.textContent = 'VALOR LIBERADO';
-            } else if (newStatus === 'disputa') {
-                header.classList.add('status-disputa');
-                badge.textContent = 'EM DISPUTA';
+        const configs = {
+            retido: {
+                classe: 'bg-amber-500',
+                titulo: 'Pagamento Retido',
+                desc: 'Aguardando aceite do serviço pelo cliente',
+                icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+                dotColor: 'bg-amber-500'
+            },
+            liberado: {
+                classe: 'bg-green-600',
+                titulo: 'Valor Liberado',
+                desc: 'Saldo disponível para saque imediato',
+                icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>',
+                dotColor: 'bg-green-600'
+            },
+            disputa: {
+                classe: 'bg-rose-600',
+                titulo: 'Em Disputa',
+                desc: 'Análise técnica solicitada por uma das partes',
+                icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>',
+                dotColor: 'bg-rose-600'
             }
-        }
-    </script>
+        };
 
+        function atualizarTela() {
+            const taxa = transacao.bruto * transacao.taxaPorcentagem;
+            const liquido = transacao.bruto - taxa;
+            const config = configs[transacao.status];
+
+            // Atualiza Valores
+            document.getElementById('valor-bruto').innerText = transacao.bruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('valor-taxa').innerText = `- ${taxa.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
+            document.getElementById('valor-liquido').innerText = liquido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+            // Atualiza Visual de Status
+            const header = document.getElementById('status-header');
+            header.className = `p-8 text-center transition-all duration-500 text-white ${config.classe}`;
+            document.getElementById('status-title').innerText = config.titulo;
+            document.getElementById('status-desc').innerText = config.desc;
+            document.getElementById('status-icon').innerHTML = config.icon;
+            
+            // Atualiza Timeline
+            const dot = document.getElementById('dot-custodia');
+            dot.className = `absolute -left-[9px] top-0 w-4 h-4 rounded-full transition-all ${config.dotColor} ${transacao.status === 'retido' ? 'animate-pulse' : ''}`;
+            document.getElementById('label-custodia').innerText = config.titulo;
+        }
+
+        function mudarPara(novoStatus) {
+            transacao.status = novoStatus;
+            atualizarTela();
+        }
+
+        // Inicialização
+        atualizarTela();
+    </script>
 </body>
 </html>
