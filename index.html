@@ -3,143 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gateway de Pagamentos - Dashboard v4.0</title>
+    <title>Painel de Transações Profissional - 2026</title>
+    <!-- Framework de Estilização Profissional -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="fonts.googleapis.com" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .glass-effect { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .glass-effect { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
 
     <!-- Card Principal -->
-    <div class="max-w-lg w-full glass-effect rounded-[2rem] shadow-2xl shadow-blue-900/10 overflow-hidden border border-slate-200">
+    <div class="max-w-md w-full glass-effect rounded-[2.5rem] shadow-2xl shadow-slate-300 overflow-hidden border border-white">
         
         <!-- Cabeçalho Dinâmico -->
-        <div id="status-header" class="p-8 text-center transition-all duration-500 bg-amber-500 text-white">
-            <div id="status-icon" class="inline-flex bg-white/20 p-4 rounded-full mb-4 ring-8 ring-white/10">
-                <!-- Ícone via JS -->
+        <div id="status-header" class="p-10 text-center transition-all duration-700 bg-amber-500 text-white">
+            <div id="status-icon" class="inline-flex bg-white/20 p-4 rounded-full mb-4 ring-8 ring-white/10 transition-transform duration-500">
+                <!-- Ícone Inicial (Retido) -->
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             </div>
-            <h1 id="status-title" class="text-2xl font-bold tracking-tight uppercase">Pagamento Retido</h1>
-            <p id="status-desc" class="text-white/80 text-sm mt-1">Aguardando confirmação de entrega do serviço</p>
+            <h1 id="status-title" class="text-2xl font-black tracking-tight uppercase italic">Pagamento Retido</h1>
+            <p id="status-desc" class="text-white/80 text-sm mt-2 font-medium">Aguardando conclusão do serviço contratado</p>
         </div>
 
         <div class="p-8 space-y-8">
-            <!-- Grid de Valores -->
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Valor Bruto</span>
-                    <span id="valor-bruto" class="text-lg font-bold text-slate-700">R$ 0,00</span>
+            
+            <!-- Grid de Valores Financeiros -->
+            <div class="space-y-3">
+                <div class="flex justify-between items-center bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                    <div>
+                        <span class="text-[10px] uppercase font-bold text-slate-400 block">Valor Bruto</span>
+                        <span class="text-lg font-bold text-slate-700">R$ 5.000,00</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[10px] uppercase font-bold text-slate-400 block">Taxas (12%)</span>
+                        <span class="text-lg font-bold text-rose-500">- R$ 600,00</span>
+                    </div>
                 </div>
-                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                    <span class="text-[10px] uppercase font-bold text-slate-400 block mb-1">Taxa Plataforma</span>
-                    <span id="valor-taxa" class="text-lg font-bold text-rose-500">- R$ 0,00</span>
-                </div>
-                <div class="col-span-2 bg-blue-600 p-6 rounded-2xl text-white shadow-lg shadow-blue-200">
-                    <span class="text-xs uppercase font-medium opacity-80 block mb-1">Valor Final a Receber (Líquido)</span>
-                    <span id="valor-liquido" class="text-3xl font-black">R$ 0,00</span>
+                
+                <div class="bg-blue-600 p-6 rounded-3xl text-white shadow-xl shadow-blue-200 flex justify-between items-center">
+                    <div>
+                        <span class="text-xs uppercase font-medium opacity-80 block">Valor Líquido</span>
+                        <span id="valor-liquido" class="text-3xl font-black tracking-tighter font-mono text-white">R$ 4.400,00</span>
+                    </div>
+                    <div class="bg-white/20 p-2 rounded-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
                 </div>
             </div>
 
-            <!-- Timeline de Segurança (Padrão 2026) -->
-            <div class="space-y-4">
-                <h3 class="text-slate-800 font-bold text-sm flex items-center">
-                    🛡️ Fluxo de Proteção ao Vendedor e Comprador
+            <!-- Timeline de Segurança -->
+            <div class="space-y-4 px-2">
+                <h3 class="text-slate-800 font-bold text-xs uppercase tracking-widest flex items-center">
+                    <span class="mr-2 text-blue-500">●</span> Status de Proteção
                 </h3>
-                <div class="border-l-2 border-slate-100 ml-3 space-y-6">
+                <div class="border-l-2 border-slate-100 ml-1 space-y-6">
                     <div class="relative pl-6">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-green-500 ring-4 ring-green-100"></div>
-                        <p class="text-sm font-semibold text-slate-700 leading-none">Pagamento Confirmado</p>
-                        <p class="text-xs text-slate-400 mt-1">Via Pix Automático 2026</p>
+                        <div class="absolute -left-[7px] top-0 w-3 h-3 rounded-full bg-green-500"></div>
+                        <p class="text-xs font-bold text-slate-600">Pagamento Autorizado (Pix Automático)</p>
                     </div>
-                    <div id="step-custodia" class="relative pl-6">
-                        <div id="dot-custodia" class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-200 animate-pulse"></div>
-                        <p class="text-sm font-semibold text-slate-700 leading-none">Dinheiro em Custódia Segura</p>
-                        <p id="label-custodia" class="text-xs text-slate-400 mt-1">Valor protegido pela API Gateway</p>
+                    <div class="relative pl-6">
+                        <div id="dot-custodia" class="absolute -left-[7px] top-0 w-3 h-3 rounded-full bg-amber-500 animate-pulse"></div>
+                        <p id="label-custodia" class="text-xs font-bold text-slate-800 tracking-tight">Recurso em Custódia pela Plataforma</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Garantia assegurada via Gateway API 2026</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Botões de Interface -->
-            <div class="flex flex-col gap-3 pt-4">
-                <button class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-xl">
-                    Emitir Nota Fiscal (NF-e)
+            <!-- Controles de Simulação (Profissional) -->
+            <div class="pt-4 space-y-3">
+                <button class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold hover:bg-black active:scale-95 transition-all shadow-lg text-sm">
+                    Visualizar Comprovante Fiscal
                 </button>
-                <div class="flex gap-2">
-                    <button id="btn-liberar" onclick="mudarPara('liberado')" class="flex-1 bg-green-100 text-green-700 py-3 rounded-xl text-xs font-bold hover:bg-green-200 transition">Simular Liberação</button>
-                    <button id="btn-disputa" onclick="mudarPara('disputa')" class="flex-1 bg-rose-100 text-rose-700 py-3 rounded-xl text-xs font-bold hover:bg-rose-200 transition">Abrir Disputa</button>
+                
+                <div class="grid grid-cols-3 gap-2">
+                    <button onclick="mudarPara('retido')" class="bg-amber-50 text-amber-600 border border-amber-200 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-amber-100 transition">
+                        Retido
+                    </button>
+                    <button onclick="mudarPara('liberado')" class="bg-green-50 text-green-600 border border-green-200 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-green-100 transition">
+                        Liberar
+                    </button>
+                    <button onclick="mudarPara('disputa')" class="bg-rose-50 text-rose-600 border border-rose-200 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-rose-100 transition">
+                        Disputa
+                    </button>
                 </div>
             </div>
         </div>
 
-        <div class="bg-slate-50 p-4 text-center border-t border-slate-100">
-            <p class="text-[10px] text-slate-400 uppercase font-bold tracking-tighter">Certificado de Segurança Bancária 2026 • SSL 256-bit</p>
+        <!-- Footer -->
+        <div class="bg-slate-50 p-5 text-center border-t border-slate-100">
+            <p class="text-[9px] text-slate-400 uppercase font-black tracking-[0.2em]">Transaction ID: #PX-2026-9901</p>
         </div>
     </div>
 
+    <!-- Motor JavaScript -->
     <script>
-        // Objeto de dados simulando uma resposta de Banco de Dados ou API
-        const transacao = {
-            bruto: 5000.00,
-            taxaPorcentagem: 0.12, // 12%
-            status: 'retido'
-        };
-
         const configs = {
             retido: {
                 classe: 'bg-amber-500',
                 titulo: 'Pagamento Retido',
-                desc: 'Aguardando aceite do serviço pelo cliente',
-                icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
-                dotColor: 'bg-amber-500'
+                desc: 'Aguardando conclusão do serviço contratado',
+                icon: '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+                dotColor: 'bg-amber-500',
+                animate: true
             },
             liberado: {
                 classe: 'bg-green-600',
                 titulo: 'Valor Liberado',
-                desc: 'Saldo disponível para saque imediato',
-                icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>',
-                dotColor: 'bg-green-600'
+                desc: 'O saldo foi creditado na conta do prestador',
+                icon: '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>',
+                dotColor: 'bg-green-600',
+                animate: false
             },
             disputa: {
                 classe: 'bg-rose-600',
                 titulo: 'Em Disputa',
-                desc: 'Análise técnica solicitada por uma das partes',
-                icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>',
-                dotColor: 'bg-rose-600'
+                desc: 'Mediação solicitada. Pagamento congelado.',
+                icon: '<svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>',
+                dotColor: 'bg-rose-600',
+                animate: false
             }
         };
 
-        function atualizarTela() {
-            const taxa = transacao.bruto * transacao.taxaPorcentagem;
-            const liquido = transacao.bruto - taxa;
-            const config = configs[transacao.status];
-
-            // Atualiza Valores
-            document.getElementById('valor-bruto').innerText = transacao.bruto.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-            document.getElementById('valor-taxa').innerText = `- ${taxa.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
-            document.getElementById('valor-liquido').innerText = liquido.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-            // Atualiza Visual de Status
-            const header = document.getElementById('status-header');
-            header.className = `p-8 text-center transition-all duration-500 text-white ${config.classe}`;
-            document.getElementById('status-title').innerText = config.titulo;
-            document.getElementById('status-desc').innerText = config.desc;
-            document.getElementById('status-icon').innerHTML = config.icon;
+        function mudarPara(status) {
+            const cfg = configs[status];
             
-            // Atualiza Timeline
+            // Alterar Cabeçalho
+            const header = document.getElementById('status-header');
+            header.className = `p-10 text-center transition-all duration-700 text-white ${cfg.classe}`;
+            
+            // Alterar Ícone e Textos
+            document.getElementById('status-icon').innerHTML = cfg.icon;
+            document.getElementById('status-title').innerText = cfg.titulo;
+            document.getElementById('status-desc').innerText = cfg.desc;
+            
+            // Alterar Timeline
             const dot = document.getElementById('dot-custodia');
-            dot.className = `absolute -left-[9px] top-0 w-4 h-4 rounded-full transition-all ${config.dotColor} ${transacao.status === 'retido' ? 'animate-pulse' : ''}`;
-            document.getElementById('label-custodia').innerText = config.titulo;
-        }
+            dot.className = `absolute -left-[7px] top-0 w-3 h-3 rounded-full transition-all duration-500 ${cfg.dotColor} ${cfg.animate ? 'animate-pulse' : ''}`;
+            document.getElementById('label-custodia').innerText = cfg.titulo;
 
-        function mudarPara(novoStatus) {
-            transacao.status = novoStatus;
-            atualizarTela();
+            // Feedback visual de escala no ícone
+            const iconContainer = document.getElementById('status-icon');
+            iconContainer.classList.add('scale-110');
+            setTimeout(() => iconContainer.classList.remove('scale-110'), 200);
         }
-
-        // Inicialização
-        atualizarTela();
     </script>
 </body>
 </html>
