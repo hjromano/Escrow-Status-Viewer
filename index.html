@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Financeiro Dinâmico</title>
+    <style>
+        /* Estilos reset e básicos */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f4f8; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 450px; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); overflow: hidden; }
+
+        /* Estilos do Cabeçalho */
+        .header { padding: 30px 20px; text-align: center; color: white; transition: background-color 0.3s ease; }
+        .status-badge { font-size: 1.2rem; font-weight: bold; padding: 8px 16px; border-radius: 20px; display: inline-block; margin-top: 10px; }
+        
+        /* Cores dos Status (Usadas pelo JS) */
+        .status-retido { background: #f1c40f; } /* Amarelo: Retido */
+        .status-liberado { background: #2ecc71; } /* Verde: Liberado */
+        .status-disputa { background: #e74c3c; } /* Vermelho: Em Disputa */
+
+        /* Estilos do Corpo */
+        .body-content { padding: 20px; }
+        .value-group { margin-bottom: 20px; }
+        .value-item { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.9rem; border-bottom: 1px solid #eee; }
+        .total-item { display: flex; justify-content: space-between; padding-top: 15px; border-top: 2px dashed #ddd; font-size: 1.5rem; font-weight: bold; }
+
+        /* Ações e Controles */
+        .controls { padding: 10px 20px; background: #eee; text-align: center; }
+        select { padding: 10px; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- CABEÇALHO (O JS vai mudar as classes aqui) -->
+        <div id="header-section" class="header status-retido">
+            <h2>Status da Transação</h2>
+            <div id="status-badge" class="status-badge">VALOR RETIDO</div>
+        </div>
+
+        <!-- DETALHES FINANCEIROS (Estáticos, mas poderiam ser dinâmicos tbm) -->
+        <div class="body-content">
+            <div class="value-group">
+                <div class="value-item">
+                    <span>Valor Bruto do Serviço</span>
+                    <strong>R$ 1.200,00</strong>
+                </div>
+                <div class="value-item" style="color: #e74c3c;">
+                    <span>Taxas da Plataforma (10%)</span>
+                    <strong>- R$ 120,00</strong>
+                </div>
+                <div class="total-item">
+                    <span>Valor Líquido</span>
+                    <strong id="liquid-value" style="color: #2ecc71;">R$ 1.080,00</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTROLES PARA TESTE (NOVA SEÇÃO) -->
+        <div class="controls">
+            <label for="status-selector">Mudar Status para Teste:</label>
+            <select id="status-selector" onchange="updateStatus()">
+                <option value="retido" selected>Retido</option>
+                <option value="liberado">Liberado</option>
+                <option value="disputa">Em Disputa</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- SCRIPT JAVASCRIPT -->
+    <script>
+        // Função chamada sempre que o usuário muda a opção no <select>
+        function updateStatus() {
+            // 1. Captura o valor selecionado (retido, liberado ou disputa)
+            const selector = document.getElementById('status-selector');
+            const newStatus = selector.value;
+
+            // 2. Referencia os elementos HTML que precisam ser atualizados
+            const header = document.getElementById('header-section');
+            const badge = document.getElementById('status-badge');
+            
+            // Remove todas as classes de status antigas para evitar conflito de cores
+            header.classList.remove('status-retido', 'status-liberado', 'status-disputa');
+
+            // 3. Aplica a nova classe e texto conforme a lógica
+            if (newStatus === 'retido') {
+                header.classList.add('status-retido');
+                badge.textContent = 'VALOR RETIDO';
+            } else if (newStatus === 'liberado') {
+                header.classList.add('status-liberado');
+                badge.textContent = 'VALOR LIBERADO';
+            } else if (newStatus === 'disputa') {
+                header.classList.add('status-disputa');
+                badge.textContent = 'EM DISPUTA';
+            }
+        }
+    </script>
+
+</body>
+</html>
