@@ -7,10 +7,17 @@
     <!-- Framework de Estilização Profissional -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="fonts.googleapis.com" rel="stylesheet">
+    
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .glass-effect { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(12px); }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.98);
+            -webkit-backdrop-filter: blur(12px); /* Safari e iOS Safari */
+            backdrop-filter: blur(12px);         /* Padrão moderno */
+            will-change: backdrop-filter;
+        }
     </style>
+
 </head>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
 
